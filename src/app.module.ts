@@ -9,7 +9,7 @@ import ormConfig from '@app/configs/orm.config';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({ isGlobal: true, envFilePath: `${__dirname}../.env` }),
+    ConfigModule.forRoot({ isGlobal: true }),
     GraphQLModule.forRoot(graphqlConfig()),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],

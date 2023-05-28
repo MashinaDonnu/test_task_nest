@@ -15,9 +15,10 @@ type DeepPartialCustom<T> = {
     : DeepPartialCustom<T[P]> | T[P];
 };
 
-export class AbstractRepository<E extends AbstractEntity> extends Repository<E> {
+export abstract class AbstractRepository<E extends AbstractEntity> extends Repository<E> {
   protected readonly _response: ResponseService;
-  constructor(target: EntityTarget<E>, manager: EntityManager) {
+
+  protected constructor(target: EntityTarget<E>, manager: EntityManager) {
     super(target, manager);
     this._response = new ResponseService();
   }
