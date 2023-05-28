@@ -19,7 +19,7 @@ export class BlogPostEntity extends AbstractEntity {
   image: string;
 
   @Field(() => BlogEntity)
-  @OneToMany(() => BlogEntity, (blog) => blog.posts, {
+  @ManyToOne(() => BlogEntity, (blog) => blog.posts, {
     cascade: true,
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',

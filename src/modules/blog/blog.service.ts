@@ -18,6 +18,7 @@ export class BlogService {
   }
 
   async delete(id: string): Promise<void> {
+    console.log('id: ', id);
     await this._repository.deleteOneEntity({ id });
   }
 

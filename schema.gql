@@ -30,15 +30,19 @@ input CreateBlogInput {
   title: String!
 }
 
+input CreateBlogPostInput {
+  blog: String!
+  description: String!
+  image: String
+  subTitle: String
+  title: String!
+}
+
 input CreateUserInput {
   email: String!
   firstName: String
   lastName: String
   password: String!
-}
-
-input DeleteBlogInput {
-  id: String!
 }
 
 input LoginUserInput {
@@ -47,18 +51,24 @@ input LoginUserInput {
 }
 
 type Mutation {
-  create(createBlog: CreateBlogInput!): BlogEntity!
-  delete(deleteBlog: DeleteBlogInput!): String!
+  createBlog(createBlog: CreateBlogInput!): BlogEntity!
+  createPost(createPost: CreateBlogPostInput!): BlogPostEntity!
+  deleteBlog(id: String!): String!
+  deletePost(id: String!): String!
   login(loginUser: LoginUserInput!): AuthResponse!
   register(createUser: CreateUserInput!): UserEntity!
-  update(updateBlog: UpdateBlogInput!): BlogEntity!
+  updateBlog(updateBlog: UpdateBlogInput!): BlogEntity!
+  updatePost(updatePost: UpdateBlogPostInput!): BlogPostEntity!
 }
 
 type Query {
-  getAll: [BlogEntity!]!
-  getAllByUser: [BlogEntity!]!
-  getById(id: String!): BlogEntity!
-  getByUserId(userId: String!): [BlogEntity!]!
+  getAllBlogs: [BlogEntity!]!
+  getAllBlogsByUser: [BlogEntity!]!
+  getAllPosts: [BlogPostEntity!]!
+  getBlogById(id: String!): BlogEntity!
+  getBlogByUserId(userId: String!): [BlogEntity!]!
+  getPostByBlogId(blogId: String!): [BlogPostEntity!]!
+  getPostById(id: String!): BlogPostEntity!
   isWork: String!
 }
 
@@ -68,6 +78,15 @@ type Tokens {
 }
 
 input UpdateBlogInput {
+  description: String!
+  id: ID!
+  image: String
+  subTitle: String
+  title: String!
+}
+
+input UpdateBlogPostInput {
+  blog: String!
   description: String!
   id: ID!
   image: String

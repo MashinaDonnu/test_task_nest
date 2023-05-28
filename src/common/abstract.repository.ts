@@ -29,7 +29,7 @@ export abstract class AbstractRepository<E extends AbstractEntity> extends Repos
     try {
       return await this.findOne(options);
     } catch (error) {
-      console.log(error);
+      console.log('[findOneEntity] Error', error);
       throw new HttpException(
         this._response.exceptionResponse({
           message: 'Entity was not found',
@@ -45,6 +45,7 @@ export abstract class AbstractRepository<E extends AbstractEntity> extends Repos
     try {
       return await this.find(options);
     } catch (error) {
+      console.log('[findManyEntities] Error', error);
       throw new HttpException(
         this._response.exceptionResponse({
           message: 'Entities was not found',
@@ -62,6 +63,7 @@ export abstract class AbstractRepository<E extends AbstractEntity> extends Repos
       const createdEntity = await this.save(entity as any as DeepPartial<E>);
       return this.findOne({ where: { id: createdEntity.id }, relations });
     } catch (error) {
+      console.log('[createOneEntity] Error', error);
       throw new HttpException(
         this._response.exceptionResponse({
           message: 'Failure entity create',
@@ -77,6 +79,7 @@ export abstract class AbstractRepository<E extends AbstractEntity> extends Repos
     try {
       return (await this.update(findConditions, dto)).raw;
     } catch (error) {
+      console.log('[updateOneEntity] Error', error);
       throw new HttpException(
         this._response.exceptionResponse({
           message: 'Failure entity update',
@@ -99,6 +102,7 @@ export abstract class AbstractRepository<E extends AbstractEntity> extends Repos
 
       return existingEntry;
     } catch (error) {
+      console.log('[updateOneEntityById] Error', error);
       throw new HttpException(
         this._response.exceptionResponse({
           message: 'Failure entity update by id',
@@ -139,6 +143,7 @@ export abstract class AbstractRepository<E extends AbstractEntity> extends Repos
     try {
       return await this.delete(conditions);
     } catch (error) {
+      console.log('[deleteOneEntity]', error);
       throw new HttpException(
         this._response.exceptionResponse({
           message: 'Failure entity delete',
