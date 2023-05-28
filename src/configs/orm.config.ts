@@ -9,7 +9,7 @@ export default (config: ConfigService): TypeOrmModuleOptions => ({
   database: config.get<string>('DB_NAME'),
   port: +config.get<string>('DB_PORT'),
   entities: [`${__dirname}/../**/*.entity.{ts,js}`],
-  synchronize: true,
+  synchronize: false,
 
   migrationsTableName: 'migrations_typeorm',
   migrations: ['src/database/migrations'],
