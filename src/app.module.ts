@@ -9,14 +9,18 @@ import { ormConfig } from '@app/configs/orm.config';
 import { UserModule } from '@app/modules/user/user.module';
 import { AuthModule } from '@app/modules/auth/auth.module';
 import { AuthMiddleware } from './common/middlewares/auth.middleware';
+import { BlogModule } from '@app/modules/blog/blog.module';
+import { SharedModule } from '@app/shared/shared.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
     GraphQLModule.forRoot(graphqlConfig()),
     TypeOrmModule.forRoot(ormConfig),
+    SharedModule,
     AuthModule,
     UserModule,
+    BlogModule,
   ],
   providers: [AppResolver],
 })

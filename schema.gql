@@ -7,6 +7,14 @@ type AuthResponse {
   user: UserEntity!
 }
 
+type BlogEntity {
+  description: String!
+  image: String!
+  subTitle: String!
+  title: String!
+  user: UserEntity!
+}
+
 input CreateUserInput {
   email: String!
   firstName: String
@@ -20,8 +28,14 @@ input LoginUserInput {
 }
 
 type Mutation {
+  create: BlogEntity!
+  delete: BlogEntity!
+  getAll: BlogEntity!
+  getById: BlogEntity!
+  getByUserId: BlogEntity!
   login(loginUser: LoginUserInput!): AuthResponse!
   register(createUser: CreateUserInput!): UserEntity!
+  update: BlogEntity!
 }
 
 type Query {
@@ -34,6 +48,7 @@ type Tokens {
 }
 
 type UserEntity {
+  blogs: [BlogEntity!]!
   email: String!
   firstName: String!
   lastName: String!

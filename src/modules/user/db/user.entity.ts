@@ -1,8 +1,9 @@
-import { BeforeInsert, Column, Entity } from 'typeorm';
+import { BeforeInsert, Column, Entity, OneToMany } from 'typeorm';
 import { Field, ObjectType } from '@nestjs/graphql';
 import { AbstractEntity } from '@app/common/abstract.entity';
 import { ERoles } from '@app/common/enums/roles.enum';
 import * as bcrypt from 'bcrypt';
+import { BlogEntity } from '@app/modules/blog/db/blog.entity';
 
 @ObjectType()
 @Entity({ name: 'users' })
@@ -38,4 +39,8 @@ export class UserEntity extends AbstractEntity {
   @Field()
   @Column({ nullable: true })
   rt: string;
+
+  @Field(() => [BlogEntity])
+  @OneToMany(() => BlogEntity, (blog) => blog.user)
+  blogs: BlogEntity[];
 }
