@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, RequestMethod } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { GraphQLModule } from '@nestjs/graphql';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -8,6 +8,7 @@ import graphqlConfig from '@app/configs/graphql.config';
 import { ormConfig } from '@app/configs/orm.config';
 import { UserModule } from '@app/modules/user/user.module';
 import { AuthModule } from '@app/modules/auth/auth.module';
+import { AuthMiddleware } from './common/middlewares/auth.middleware';
 
 @Module({
   imports: [
@@ -19,4 +20,11 @@ import { AuthModule } from '@app/modules/auth/auth.module';
   ],
   providers: [AppResolver],
 })
-export class AppModule {}
+export class AppModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(AuthMiddleware).forRoutes({
+      path: '*',
+      method: RequestMethod.ALL,
+    });
+  }
+}
