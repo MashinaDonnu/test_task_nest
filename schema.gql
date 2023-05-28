@@ -2,6 +2,42 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type AuthResponse {
+  tokens: Tokens!
+  user: UserEntity!
+}
+
+input CreateUserInput {
+  email: String!
+  firstName: String
+  lastName: String
+  password: String!
+}
+
+input LoginUserInput {
+  email: String!
+  password: String!
+}
+
+type Mutation {
+  login(loginUser: LoginUserInput!): AuthResponse!
+  register(createUser: CreateUserInput!): UserEntity!
+}
+
 type Query {
   isWork: String!
+}
+
+type Tokens {
+  accessToken: String!
+  refreshToken: String!
+}
+
+type UserEntity {
+  email: String!
+  firstName: String!
+  lastName: String!
+  password: String!
+  role: String!
+  rt: String!
 }

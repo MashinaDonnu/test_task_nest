@@ -1,4 +1,7 @@
-import { Resolver } from '@nestjs/graphql';
+import { Args, Mutation, Resolver } from '@nestjs/graphql';
+import { UserService } from '@app/modules/user/user.service';
 
 @Resolver()
-export class UserResolver {}
+export class UserResolver {
+  constructor(private readonly _service: UserService) {}
+}

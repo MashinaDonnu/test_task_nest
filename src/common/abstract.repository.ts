@@ -1,5 +1,7 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck
 import { HttpException, HttpStatus } from '@nestjs/common';
-import { FindManyOptions, FindOneOptions, Repository } from 'typeorm';
+import { DeepPartial, FindManyOptions, FindOneOptions, Repository } from 'typeorm';
 import { AbstractEntity } from '@app/common/abstract.entity';
 import { EntityTarget } from 'typeorm/common/EntityTarget';
 import { EntityManager } from 'typeorm/entity-manager/EntityManager';
@@ -53,10 +55,10 @@ export abstract class AbstractRepository<E extends AbstractEntity> extends Repos
     }
   }
 
-  async createOneEntity(dto: DeepPartialCustom<E>, relations: string[] = []): Promise<E> {
+  async createOneEntity(dto: DeepPartial<E>, relations: string[] = []): Promise<E> {
     try {
       const entity = this.create(dto);
-      const createdEntity = await this.save(entity as any as DeepPartialCustom<E>);
+      const createdEntity = await this.save(entity as any as DeepPartial<E>);
       return this.findOne({ where: { id: createdEntity.id }, relations });
     } catch (error) {
       throw new HttpException(

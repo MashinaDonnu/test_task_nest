@@ -1,17 +1,26 @@
-import { TypeOrmModuleOptions } from '@nestjs/typeorm/dist/interfaces/typeorm-options.interface';
-import { ConfigService } from '@nestjs/config';
+import dotenv = require('dotenv');
+import { DataSource, DataSourceOptions } from 'typeorm';
 
-export default (config: ConfigService): TypeOrmModuleOptions => ({
+dotenv.config();
+export const ormConfig: DataSourceOptions = {
   type: 'postgres',
-  host: config.get<'aurora-postgres'>('DB_HOST'),
-  username: config.get<string>('DB_USERNAME'),
-  password: config.get<string>('DB_PASSWORD'),
-  database: config.get<string>('DB_NAME'),
-  port: +config.get<string>('DB_PORT'),
+  host: process.env.DB_HOST,
+  port: Number(process.env.DB_PORT),
+  username: process.env.DB_USERNAME,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
   entities: [`${__dirname}/../**/*.entity.{ts,js}`],
   synchronize: false,
-
+  migrations: [getMigrationDirectory()],
   migrationsTableName: 'migrations_typeorm',
-  migrations: ['src/database/migrations'],
-  logging: true,
-});
+};
+
+function getMigrationDirectory() {
+  return `${stringBool(process.env.IS_TS_NODE) ? 'src' : 'dist'}/database/migrations/**/*{.ts,.js}`;
+}
+
+function stringBool(str) {
+  return str === 'true';
+}
+
+export default new DataSource(ormConfig);
