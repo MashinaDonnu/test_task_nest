@@ -1,7 +1,8 @@
-import { Column, Entity, ManyToOne } from 'typeorm';
+import { Column, Entity, ManyToOne, OneToMany } from 'typeorm';
 import { Field, ObjectType } from '@nestjs/graphql';
 import { AbstractEntity } from '@app/common/abstract.entity';
 import { UserEntity } from '@app/modules/user/db/user.entity';
+import { BlogPostEntity } from '@app/modules/blog-post/db/blog-post.entity';
 
 @ObjectType()
 @Entity({ name: 'blogs' })
@@ -29,4 +30,8 @@ export class BlogEntity extends AbstractEntity {
     onUpdate: 'CASCADE',
   })
   user: UserEntity;
+
+  @Field(() => [BlogPostEntity])
+  @OneToMany(() => BlogPostEntity, (post) => post.blog)
+  posts: BlogPostEntity[];
 }

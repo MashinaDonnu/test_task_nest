@@ -4,6 +4,7 @@ import { AbstractEntity } from '@app/common/abstract.entity';
 import { ERoles } from '@app/common/enums/roles.enum';
 import * as bcrypt from 'bcrypt';
 import { BlogEntity } from '@app/modules/blog/db/blog.entity';
+import { BlogPostEntity } from '@app/modules/blog-post/db/blog-post.entity';
 
 @ObjectType()
 @Entity({ name: 'users' })

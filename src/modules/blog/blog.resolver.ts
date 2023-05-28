@@ -15,7 +15,7 @@ import { DeleteBlogInput } from '@app/modules/blog/inputs/delete-blog.input';
 export class BlogResolver {
   constructor(private readonly _service: BlogService) {}
 
-  @HttpCode(HttpStatus.OK)
+  @HttpCode(HttpStatus.CREATED)
   @UseGuards(AuthGuard)
   @Mutation(() => BlogEntity)
   async create(@Args('createBlog') createBlog: CreateBlogInput, @User() currentUser: UserEntity): Promise<BlogEntity> {

@@ -11,6 +11,7 @@ import { AuthModule } from '@app/modules/auth/auth.module';
 import { AuthMiddleware } from './common/middlewares/auth.middleware';
 import { BlogModule } from '@app/modules/blog/blog.module';
 import { SharedModule } from '@app/shared/shared.module';
+import { BlogPostModule } from '@app/modules/blog-post/blog-post.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { SharedModule } from '@app/shared/shared.module';
     AuthModule,
     UserModule,
     BlogModule,
+    BlogPostModule,
   ],
   providers: [AppResolver],
 })

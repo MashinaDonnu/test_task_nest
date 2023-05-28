@@ -10,9 +10,17 @@ type AuthResponse {
 type BlogEntity {
   description: String!
   image: String!
+  posts: [BlogPostEntity!]!
   subTitle: String!
   title: String!
   user: UserEntity!
+}
+
+type BlogPostEntity {
+  blog: BlogEntity!
+  description: String!
+  image: String!
+  title: String!
 }
 
 input CreateBlogInput {
