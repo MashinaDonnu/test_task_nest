@@ -15,11 +15,22 @@ type BlogEntity {
   user: UserEntity!
 }
 
+input CreateBlogInput {
+  description: String!
+  image: String
+  subTitle: String
+  title: String!
+}
+
 input CreateUserInput {
   email: String!
   firstName: String
   lastName: String
   password: String!
+}
+
+input DeleteBlogInput {
+  id: String!
 }
 
 input LoginUserInput {
@@ -28,23 +39,32 @@ input LoginUserInput {
 }
 
 type Mutation {
-  create: BlogEntity!
-  delete: BlogEntity!
-  getAll: BlogEntity!
-  getById: BlogEntity!
-  getByUserId: BlogEntity!
+  create(createBlog: CreateBlogInput!): BlogEntity!
+  delete(deleteBlog: DeleteBlogInput!): String!
   login(loginUser: LoginUserInput!): AuthResponse!
   register(createUser: CreateUserInput!): UserEntity!
-  update: BlogEntity!
+  update(updateBlog: UpdateBlogInput!): BlogEntity!
 }
 
 type Query {
+  getAll: [BlogEntity!]!
+  getAllByUser: [BlogEntity!]!
+  getById(id: String!): BlogEntity!
+  getByUserId(userId: String!): [BlogEntity!]!
   isWork: String!
 }
 
 type Tokens {
   accessToken: String!
   refreshToken: String!
+}
+
+input UpdateBlogInput {
+  description: String!
+  id: ID!
+  image: String
+  subTitle: String
+  title: String!
 }
 
 type UserEntity {

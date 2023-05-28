@@ -4,13 +4,15 @@ import { Reflector } from '@nestjs/core';
 import { ResponseService } from '@app/services/response.service';
 import { ROLES_KEY } from '@app/common/decorators/permission.decorator';
 import { UserEntity } from '@app/modules/user/db/user.entity';
+import { GqlExecutionContext } from '@nestjs/graphql';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
   constructor(private reflector: Reflector, private readonly responseService: ResponseService) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
-    const request = context.switchToHttp().getRequest<IExpressRequest>();
+    // const request = context.switchToHttp().getRequest<IExpressRequest>();
+    const request = GqlExecutionContext.create(context).getContext().req as IExpressRequest;
 
     if (!request.user) {
       throw new HttpException(
@@ -23,8 +25,7 @@ export class AuthGuard implements CanActivate {
     }
 
     try {
-      const req = context.switchToHttp().getRequest();
-      const currentUser = req.user as UserEntity;
+      const currentUser = request.user as UserEntity;
 
       const isHavePermissions = await this.isHavePermissions(currentUser, context);
       if (isHavePermissions) {
@@ -33,6 +34,7 @@ export class AuthGuard implements CanActivate {
 
       throw new HttpException('No permissions', HttpStatus.FORBIDDEN);
     } catch (e) {
+      console.log(e);
       throw new HttpException(
         this.responseService.exceptionResponse({
           message: 'You don`t have a permissions',

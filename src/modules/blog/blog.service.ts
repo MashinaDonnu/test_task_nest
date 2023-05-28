@@ -1,19 +1,35 @@
 import { Injectable } from '@nestjs/common';
 import { BlogRepository } from '@app/modules/blog/db/blog.repository';
+import { UserEntity } from '@app/modules/user/db/user.entity';
+import { CreateBlogInput } from '@app/modules/blog/inputs/create-blog.input';
+import { UpdateBlogInput } from '@app/modules/blog/inputs/update-blog.input';
+import { BlogEntity } from '@app/modules/blog/db/blog.entity';
 
 @Injectable()
 export class BlogService {
   constructor(private readonly _repository: BlogRepository) {}
 
-  async create() {}
+  async create(dto: CreateBlogInput, currentUser: UserEntity): Promise<BlogEntity> {
+    return await this._repository.createOneEntity({ user: currentUser, ...dto });
+  }
 
-  async update() {}
+  async update(dto: UpdateBlogInput): Promise<BlogEntity> {
+    return await this._repository.updateOneEntityById(dto.id, dto);
+  }
 
-  async delete() {}
+  async delete(id: string): Promise<void> {
+    await this._repository.deleteOneEntity({ id });
+  }
 
-  async getById() {}
+  async getById(id: string): Promise<BlogEntity> {
+    return this._repository.findOneEntity({ where: { id } });
+  }
 
-  getByUserId() {}
+  async getByUserId(userId: string): Promise<BlogEntity[]> {
+    return await this._repository.findManyEntities({ where: { user: { id: userId } } });
+  }
 
-  getAll() {}
+  async getAll(): Promise<BlogEntity[]> {
+    return await this._repository.findManyEntities();
+  }
 }

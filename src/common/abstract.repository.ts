@@ -29,6 +29,7 @@ export abstract class AbstractRepository<E extends AbstractEntity> extends Repos
     try {
       return await this.findOne(options);
     } catch (error) {
+      console.log(error);
       throw new HttpException(
         this._response.exceptionResponse({
           message: 'Entity was not found',

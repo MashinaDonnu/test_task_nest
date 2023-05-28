@@ -1,8 +1,9 @@
 import { createParamDecorator, ExecutionContext } from '@nestjs/common';
 import { IExpressRequest } from '@app/common/types/express-request.interface';
+import { GqlExecutionContext } from '@nestjs/graphql';
 
 export const User = createParamDecorator((data: any, ctx: ExecutionContext) => {
-  const request = ctx.switchToHttp().getRequest<IExpressRequest>();
+  const request = GqlExecutionContext.create(ctx).getContext().req as IExpressRequest;
 
   if (!request.user) {
     return null;
@@ -11,5 +12,6 @@ export const User = createParamDecorator((data: any, ctx: ExecutionContext) => {
   if (data) {
     return request.user[data];
   }
+
   return request.user;
 });
