@@ -16,7 +16,6 @@ FROM node
 
 
 ENV NODE_ENV=production
-ENV PORT=3000
 ENV DB_NAME=nest_blog_db
 ENV DB_HOST=database-1.cmyatojneahy.us-east-1.rds.amazonaws.com
 ENV DB_PORT=5432
@@ -27,8 +26,6 @@ ENV RT_SECRET=cdf26213a150dc3ecb610f18f6b38b46
 
 USER node
 WORKDIR /home/node
-
-EXPOSE $PORT
 
 COPY --from=builder /home/node/package*.json /home/node/
 COPY --from=builder /home/node/node_modules/ /home/node/node_modules/
