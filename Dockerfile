@@ -16,7 +16,7 @@ FROM node:16.8-alpine3.11
 
 ENV NODE_ENV production
 ENV NODE_ENV production
-ENV API_PORT 5000
+ENV PORT 5000
 ENV DB_NAME nest_blog_db
 ENV DB_HOST database-1.cmyatojneahy.us-east-1.rds.amazonaws.com
 ENV DB_PORT 5432
