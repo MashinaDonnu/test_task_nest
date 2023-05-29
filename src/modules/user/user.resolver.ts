@@ -31,7 +31,7 @@ export class UserResolver {
   @HttpCode(HttpStatus.OK)
   @Permissions([ERoles.moderator])
   @UseGuards(AuthGuard)
-  @Query(() => BlogEntity)
+  @Query(() => UserEntity)
   async getUserById(@Args('id') id: string): Promise<UserEntity> {
     return await this._service.getById(id);
   }

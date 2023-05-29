@@ -1,7 +1,7 @@
-import { Field, ID, ObjectType } from '@nestjs/graphql';
+import { Field, ID, InputType, ObjectType } from '@nestjs/graphql';
 import { Column } from 'typeorm';
 
-@ObjectType()
+@InputType()
 export class UpdateUserInput {
   @Field(() => ID)
   id: string;
