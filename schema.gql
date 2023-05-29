@@ -45,6 +45,13 @@ input CreateUserInput {
   password: String!
 }
 
+input GetPostsListInput {
+  order: OrderPostsList
+  page: Float
+  skip: Float
+  take: Float!
+}
+
 input LoginUserInput {
   email: String!
   password: String!
@@ -61,10 +68,15 @@ type Mutation {
   updatePost(updatePost: UpdateBlogPostInput!): BlogPostEntity!
 }
 
+input OrderPostsList {
+  title: String
+}
+
 type Query {
   getAllBlogs: [BlogEntity!]!
   getAllBlogsByUser: [BlogEntity!]!
   getAllPosts: [BlogPostEntity!]!
+  getAllPostsPaginate(getAllPostsPaginate: GetPostsListInput!): [BlogPostEntity!]!
   getBlogById(id: String!): BlogEntity!
   getBlogByUserId(userId: String!): [BlogEntity!]!
   getPostByBlogId(blogId: String!): [BlogPostEntity!]!

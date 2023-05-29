@@ -8,6 +8,8 @@ import { EntityManager } from 'typeorm/entity-manager/EntityManager';
 import { ResponseService } from '@app/services/response.service';
 import { FindOptionsWhere } from 'typeorm/find-options/FindOptionsWhere';
 import { QueryDeepPartialEntity } from 'typeorm/query-builder/QueryPartialEntity';
+import { IPageOptions } from '@app/common/types/page-options.interface';
+import { TSortOptions } from '@app/common/types/sort-options.type';
 
 type DeepPartialCustom<T> = {
   [P in keyof T]?: T[P] extends Array<infer U>
@@ -16,6 +18,9 @@ type DeepPartialCustom<T> = {
     ? ReadonlyArray<DeepPartialCustom<U>>
     : DeepPartialCustom<T[P]> | T[P];
 };
+
+const DEFAULT_PAGE = 1;
+const DEFAULT_TAKE = 10;
 
 export abstract class AbstractRepository<E extends AbstractEntity> extends Repository<E> {
   protected readonly _response: ResponseService;
@@ -170,5 +175,22 @@ export abstract class AbstractRepository<E extends AbstractEntity> extends Repos
       }),
       HttpStatus.BAD_REQUEST,
     );
+  }
+
+  async getSortPaginate(
+    pageOptions: IPageOptions,
+    sortOptions: TSortOptions<E> = {},
+    options: FindManyOptions<E> = {},
+  ) {
+    const take = pageOptions.take || DEFAULT_TAKE;
+    const page = pageOptions.page || DEFAULT_PAGE;
+    const skip = (page - 1) * take;
+
+    return await this.findManyEntities({
+      skip,
+      take,
+      order: sortOptions,
+      ...options,
+    });
   }
 }

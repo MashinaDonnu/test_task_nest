@@ -8,6 +8,7 @@ import { BlogPostService } from '@app/modules/blog-post/blog-post.service';
 import { CreateBlogPostInput } from '@app/modules/blog-post/inputs/create-blog-post.input';
 import { BlogPostEntity } from '@app/modules/blog-post/db/blog-post.entity';
 import { UpdateBlogPostInput } from '@app/modules/blog-post/inputs/update-blog-post.input';
+import { GetPostsListInput } from '@app/modules/blog-post/inputs/get-posts-list.input';
 
 @Resolver()
 export class BlogPostResolver {
@@ -56,5 +57,15 @@ export class BlogPostResolver {
   @Query(() => [BlogPostEntity])
   async getAllPosts(): Promise<BlogPostEntity[]> {
     return await this._service.getAll();
+  }
+
+  @HttpCode(HttpStatus.OK)
+  @Permissions([ERoles.writer])
+  @UseGuards(AuthGuard)
+  @Query(() => [BlogPostEntity])
+  async getAllPostsPaginate(
+    @Args('getAllPostsPaginate') getAllPostsPaginate: GetPostsListInput,
+  ): Promise<BlogPostEntity[]> {
+    return await this._service.getAllPaginate(getAllPostsPaginate);
   }
 }

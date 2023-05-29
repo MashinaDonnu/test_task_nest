@@ -3,6 +3,7 @@ import { BlogPostRepository } from '@app/modules/blog-post/db/blog-post.reposito
 import { BlogPostEntity } from '@app/modules/blog-post/db/blog-post.entity';
 import { CreateBlogPostInput } from '@app/modules/blog-post/inputs/create-blog-post.input';
 import { UpdateBlogPostInput } from '@app/modules/blog-post/inputs/update-blog-post.input';
+import { GetPostsListInput } from '@app/modules/blog-post/inputs/get-posts-list.input';
 
 @Injectable()
 export class BlogPostService {
@@ -34,5 +35,9 @@ export class BlogPostService {
 
   async getAll(): Promise<BlogPostEntity[]> {
     return await this._repository.findManyEntities();
+  }
+
+  async getAllPaginate(dto: GetPostsListInput): Promise<BlogPostEntity[]> {
+    return await this._repository.getSortPaginate(dto, dto.order);
   }
 }
