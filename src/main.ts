@@ -5,8 +5,11 @@ import { ConfigService } from '@nestjs/config';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const config = await app.get(ConfigService);
+  console.log('process env port: ', process.env);
   //@ts-ignore
-  const port = +config.get<number>('API_PORT') || 3000;
+  const port = +config.get<number>('PORT') || 3000;
+  console.log('port');
+
   await app.listen(port);
   console.log(`App started on port ${port}`);
 }
