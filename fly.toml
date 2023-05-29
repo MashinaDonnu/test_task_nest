@@ -1,0 +1,14 @@
+# fly.toml app configuration file generated for nestblog2 on 2023-05-29T06:48:49+03:00
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = "nestblog2"
+primary_region = "waw"
+
+[http_service]
+  internal_port = 3000
+  force_https = true
+  auto_stop_machines = true
+  auto_start_machines = true
+  min_machines_running = 0
