@@ -83,7 +83,7 @@ type Query {
   getBlogByUserId(userId: String!): [BlogEntity!]!
   getPostByBlogId(blogId: String!): [BlogPostEntity!]!
   getPostById(id: String!): BlogPostEntity!
-  getUserById(id: String!): BlogEntity!
+  getUserById(id: String!): UserEntity!
   isWork: String!
 }
 
