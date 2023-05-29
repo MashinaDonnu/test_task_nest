@@ -27,6 +27,8 @@ ENV RT_SECRET cdf26213a150dc3ecb610f18f6b38b46
 USER node
 WORKDIR /home/node
 
+EXPOSE $PORT
+
 COPY --from=builder /home/node/package*.json /home/node/
 COPY --from=builder /home/node/node_modules/ /home/node/node_modules/
 COPY --from=builder /home/node/dist/ /home/node/dist/
